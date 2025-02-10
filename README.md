@@ -4,7 +4,7 @@ The Task Management Application is designed to streamline project and task manag
 
 The APIs are easily accessible and well-documented via Swagger UI, allowing developers to interact with the system efficiently.
 
-## Features  
+# Features  
 📝 **Project Management** – Create, update, and track project progress.  
 👥 **Role Management** – Define and manage user roles and permissions.  
 📋 **Task Management** – Add, update, and track user tasks associated with projects.  
@@ -13,16 +13,18 @@ The APIs are easily accessible and well-documented via Swagger UI, allowing deve
 📂 **MVC Architecture** – Clear separation between controllers, services, and repositories.  
 📊 **REST API with Spring Boot** – Robust and scalable API endpoints for all entities.  
 
-## Technologies used
+# Technologies used
 - **Java 17**
-- **Spring Boot**
-- **Spring Security**
+- **Spring Boot 2.0**
 - **Maven**
 - **MySQL**
 - **Spring Data JPA**
 - **Swagger UI**
+-  **Spring Security**
+-  **JSON Web Tokens (JWT)**
+-  **Auth0**
 
-## Running the app
+# Running the app
 1. Clone the repository:  
    `git clone https://github.com/AssmaGht/Gestion-des-taches.git`
    
@@ -36,27 +38,35 @@ The APIs are easily accessible and well-documented via Swagger UI, allowing deve
 4. Run the app:  
    Right-click the project in the Package Explorer and click **Run As > Spring Boot App**.
 
-## API Documentation
+# API Documentation
 - API documentation is available via Swagger UI at: http://localhost:8083/swagger-ui/index.html
 
-## Workflow
+# Workflow
 <img src="https://github.com/user-attachments/assets/bc01b20a-e9da-4a78-892d-ff25a37f8fe0" width="500" />
+
+# Security
+- The API is secured using JSON Web Tokens (JWT) handled by Auth0. To access the API, you will need to obtain a JWT by authenticating with the /login endpoint. The JWT should then be passed in the Authorize option available in the Swagger-ui.
+
+  ## Example:
+   Authorization: <your_jwt>
 
 ## Swagger UI
 
-<img width="1300" alt="Image" src="https://github.com/user-attachments/assets/e66e2fa9-2294-4be4-972a-7a45a4035cf2" />
+<img width="1500" alt="Image" src="https://github.com/user-attachments/assets/e66e2fa9-2294-4be4-972a-7a45a4035cf2" />
 
-<img width="1300" alt="Image" src="https://github.com/user-attachments/assets/62e10368-0ace-4936-9d1c-c63f1d3bfb01" />
+<img width="1500" alt="Image" src="https://github.com/user-attachments/assets/62e10368-0ace-4936-9d1c-c63f1d3bfb01" />
 
-<img width="1300" alt="Image" src="https://github.com/user-attachments/assets/940bbbd4-ebaf-497b-a16c-5f74456e09c3" />
+<img width="1500" alt="Image" src="https://github.com/user-attachments/assets/940bbbd4-ebaf-497b-a16c-5f74456e09c3" />
 
-## API Controllers
-- **ProjectController** – Handles project-related endpoints (Create, Update, Delete, List).  
-- **RoleController** – Manages user roles and permissions.  
-- **TaskController** – Manages tasks linked to projects and users.  
-- **AuthController** – Manages user authentication and token generation.
+# API Controllers
+<img width="1230" alt="Image" src="https://github.com/user-attachments/assets/4267c31a-4d5c-48c4-97d1-a06a72f08fe9" />
 
-![API Controller](https://github.com/user-attachments/assets/api_controller_example.png)
+<img width="1217" alt="Image" src="https://github.com/user-attachments/assets/6d1abff6-880c-4bbe-99e7-e544a71d492f" />
+
+<img width="1221" alt="Image" src="https://github.com/user-attachments/assets/5b0329fe-530f-4ba3-843b-8d221a0bcd7d" />
+
+<img width="1221" alt="Image" src="https://github.com/user-attachments/assets/68602ed9-4938-421b-af84-d38527d15250" />
+
 
 ## Stay Tuned for Upcoming Features
 The next release will feature enhanced task notifications, priority management, and integration with external project management tools. Stay tuned for more updates!

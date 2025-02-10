@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"], input[type="password"] {
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #2575fc;
+            outline: none;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1d64d0;
+        }
+
+        .message {
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            display: none;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" required>
+
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Se connecter</button>
+        </form>
+
+        <!-- Message de succès ou erreur -->
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // Envoi de la requête POST vers le backend
+            fetch("http://localhost:8083/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Échec de la connexion");
+                }
+                return response.json();
+            })
+            .then(data => {
+                const messageElement = document.getElementById("message");
+                messageElement.style.display = "block";
+
+                if (data.message && data.message.toLowerCase().includes("succesful")) {
+                    // Affichage du message de succès et stockage du token
+                    messageElement.innerText = "Connexion réussie ! Bienvenue.";
+                    messageElement.classList.add("success");
+                    messageElement.classList.remove("error");
+
+                    // Stockage du token JWT dans le localStorage
+                    localStorage.setItem("authToken", data.token);
+
+                    // Vous pouvez rediriger l'utilisateur vers une page d'accueil ou autre
+                    setTimeout(() => {
+                        window.location.href = "/home";  // Changez selon votre besoin
+                    }, 2000);
+
+                } else {
+                    messageElement.innerText = "Erreur : " + data.message;
+                    messageElement.classList.add("error");
+                    messageElement.classList.remove("success");
+                }
+            })
+            .catch(error => {
+                const messageElement = document.getElementById("message");
+                messageElement.style.display = "block";
+                messageElement.innerText = "Erreur : " + error.message;
+                messageElement.classList.add("error");
+                messageElement.classList.remove("success");
+            });
+        });
+    </script>
+</body>
+</html>

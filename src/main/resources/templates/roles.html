@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rôles</title>
+    <style>
+body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .api-link {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #2575fc;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .api-link:hover {
+            background-color: #1d64d0;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1d64d0;
+        }    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Gestion des Rôles</h2>
+
+        <!-- Afficher les actions disponibles -->
+        <div>
+            <a href="/api/role/afficher" class="api-link">Afficher les Rôles</a>
+            <a href="/api/role/ajouter" class="api-link">Ajouter un Rôle</a>
+            <a href="/api/role/modifier" class="api-link">Modifier un Rôle</a>
+            <a href="/api/role/supprimer" class="api-link">Supprimer un Rôle</a>
+        </div>
+
+        <!-- Déconnexion -->
+        <button id="logout-btn">Se déconnecter</button>
+    </div>
+
+    <script>
+        document.getElementById("logout-btn").addEventListener("click", function() {
+            localStorage.removeItem("authToken");
+            window.location.href = "/login"; // Redirection vers la page de login après déconnexion
+        });
+    </script>
+</body>
+</html>

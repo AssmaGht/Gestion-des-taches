@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="password"], select {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .message {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .message.success {
+            color: green;
+        }
+
+        .message.error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Inscription</h2>
+
+        <!-- Message affiché au-dessus du formulaire -->
+        <p id="registerMessage" class="message"></p>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="regNom">Nom:</label>
+                <input type="text" id="regNom" name="nom" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="regPrenom">Prénom:</label>
+                <input type="text" id="regPrenom" name="prenom" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regEmail">Email:</label>
+                <input type="text" id="regEmail" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regUsername">Nom d'utilisateur:</label>
+                <input type="text" id="regUsername" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regPassword">Mot de passe:</label>
+                <input type="password" id="regPassword" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regRole">Rôle:</label>
+                <select id="regRole" name="role" required>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                    <option value="Formateur">Formateur</option>
+                    <option value="enseignant">Enseignant</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="regStatus">Statut:</label>
+                <select id="regStatus" name="status" required>
+                    <option value="active">Actif</option>
+                    <option value="archived">Archivé</option>
+                </select>
+            </div>
+
+            <button type="submit">S'inscrire</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const nom = document.getElementById("regNom").value;
+            const prenom = document.getElementById("regPrenom").value;
+            const email = document.getElementById("regEmail").value;
+            const username = document.getElementById("regUsername").value;
+            const password = document.getElementById("regPassword").value;
+            const role = document.getElementById("regRole").value;
+            const status = document.getElementById("regStatus").value;
+
+            fetch("http://localhost:8083/User/ajouteravecrole?profil=" + role, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    nom: nom,
+                    prenom: prenom,
+                    email: email,
+                    username: username,
+                    motpass: password,
+                    status: status
+                })
+            })
+            .then(response => response.text())
+            .then(data => {
+                const messageElement = document.getElementById("registerMessage");
+                messageElement.innerText = data;
+                messageElement.classList.remove("error", "success");
+
+                if (data.includes("succée")) {
+                    messageElement.classList.add("success");
+                } else {
+                    messageElement.classList.add("error");
+                }
+            })
+            .catch(error => {
+                const messageElement = document.getElementById("registerMessage");
+                messageElement.innerText = "Erreur: " + error.message;
+                messageElement.classList.add("error");
+            });
+        });
+    </script>
+</body>
+</html>
